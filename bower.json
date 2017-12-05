@@ -1,0 +1,17 @@
+{
+  "name": "finanto_widgets",
+  "homepage": "https://finanto.pl",
+  "authors": [
+    "Dawid Urbański"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "susy": "^3.0.1"
+  },
+  "overrides": {
+    "susy": {
+      "main": "sass/_susy.scss"
+    }
+  }
+}

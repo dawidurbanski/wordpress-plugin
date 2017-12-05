@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "main.js": {
+      "files": [
+        "scripts/main.js"
+      ],
+      "main": true
+    },
+    "admin.js": {
+      "files": [
+        "scripts/admin.js"
+      ],
+      "main": true
+    },
+    "customizer.js": {
+      "files": [
+        "scripts/customizer.js"
+      ]
+    },
+    "main.css": {
+      "files": [
+        "styles/main.scss"
+      ],
+      "main": true
+    }
+  },
+  "config": {
+    "devUrl": "http://finanto.localhost"
+  },
+  "paths": {
+    "source": "assets/src/",
+    "dist": "assets/dist/"
+  }
+}

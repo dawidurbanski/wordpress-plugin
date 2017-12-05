@@ -1,0 +1,29 @@
+{
+  "name": "webastik/finanto-widgets",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "description": "Finanto widgets plugin.",
+  "authors": [
+    {
+      "name": "Dawid Urbański",
+      "email": "hi@dawidurbanski.com",
+      "homepage": "http://webastik.pl"
+    }
+  ],
+  "keywords": [
+    "wordpress"
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "apigen/apigen": "dev-master",
+    "roave/better-reflection": "dev-master#c87d856"
+  },
+  "autoload": {
+    "psr-4": {
+      "Plugin\\": "src/class/"
+    }
+  }
+}
