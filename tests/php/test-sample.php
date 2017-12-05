@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package Talentfunl
+ * @package Plugin
  */
 
 use PHPUnit\Framework\TestCase;
