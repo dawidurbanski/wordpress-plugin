@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# check current branch
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# project name for naming convention plugin / theme
+project_type="plugin"
+
+# project name (the same as root project folder name)
+project_name=${PWD##*/}
+
+# current directory
+project_dir=`pwd`
+
+# application directory, root of main docker based WordPress app
+application_dir="$(dirname $(dirname $(dirname $(dirname "$project_dir"))))"
+
+# distribution version directory in main app
+dist_dir="$application_dir/dist"
+
+# clone dist repository if directory doesn't exist
+if [ ! -d "$dist_dir/$project_name-dist" ]; then
+  cd $dist_dir && git clone "git@gitlab.com:$project_name/$project_type-dist.git" "$project_name-dist"
+fi
+
+# switch to current branch on corresponding dist repo
+cd "$dist_dir/$project_name-dist" && git checkout -b $current_branch && git checkout $current_branch
+
+# create zip and targz packages in dist/zip dist/targz folders
+wp dist-archive $project_dir "$dist_dir/zip/$project_name-dist"
+wp dist-archive $project_dir "$dist_dir/targz/$project_name-dist" --format=targz
+
+# unpack targz to temporary folder
+tar -xf "$dist_dir/targz/$project_name-dist" -C "$dist_dir/temp" --overwrite
+
+# transfer all files to dist repo folder with removal of deleted files. leave .git folder
+rsync -a -v "$dist_dir/temp/$project_name/" "$dist_dir/$project_name-dist" --delete --exclude .git
+
+# remove temporary folder
+rm -rf "$dist_dir/temp/$project_name/"
+
+# go to plugin, commit all changes and push to plugin-dist repo
+cd "$dist_dir/$project_name-dist" && git add . && git commit -m "Auto deploy distribution package" && git push -f origin $current_branch
+
+exit 0
